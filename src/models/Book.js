@@ -6,14 +6,14 @@ const bookSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'authors',
-    required: true,
+    required: true
   },
   publisher: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'publishers',
-    required: true,
+    required: true
   },
-  numPages: { type: Number },
+  numPages: { type: Number }
 })
 
 const books = mongoose.model('books', bookSchema)

@@ -1,55 +1,55 @@
-import authors from '../models/Author.js'
+import Publishers from '../models/Publisher.js'
 
-class AuthorsController {
-  static listAuthors = async (req, res) => {
+class PublishersController {
+  static listPublishers = async (req, res) => {
     try {
-      const authorsResult = await authors.find()
-      res.status(200).json(authorsResult)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  }
-
-  static listAuthorById = async (req, res) => {
-    const id = req.params.id
-
-    try {
-      const author = await authors.findById(id)
-      res.status(200).json(author)
+      const publishersList = await Publishers.find()
+      res.status(200).json(publishersList)
     } catch (err) {
       res.status(400).json({ message: `${err} - id not found` })
     }
   }
 
-  static registerAuthor = async (req, res) => {
-    const author = new authors(req.body)
+  static listPublisherById = async (req, res) => {
+    const id = req.params.id
+
     try {
-      await author.save()
-      res.status(201).send(author.toJSON())
+      const publisher = await Publishers.findById(id)
+      res.status(200).json(publisher)
+    } catch (err) {
+      res.status(400).json({ message: `${err} - id not found` })
+    }
+  }
+
+  static registerPublisher = async (req, res) => {
+    const publisher = new Publishers(req.body)
+    try {
+      await publisher.save()
+      res.status(201).send(publisher.toJSON())
     } catch (err) {
       res.status(500).send({ message: `${err} - register failed` })
     }
   }
 
-  static updateAuthor = async (req, res) => {
+  static updatePublisher = async (req, res) => {
     const id = req.params.id
     try {
-      await authors.findByIdAndUpdate(id, { $set: req.body })
-      res.status(200).send('successfully updated author')
+      await Publishers.findByIdAndUpdate(id, { $set: req.body })
+      res.status(200).send('successfully updated publisher')
     } catch (err) {
       res.status(500).send({ message: `${err} - update failed` })
     }
   }
 
-  static deleteAuthor = async (req, res) => {
+  static deletePublisher = async (req, res) => {
     const id = req.params.id
     try {
-      await authors.findByIdAndDelete(id)
-      res.status(200).send('author deleted')
+      await Publishers.findByIdAndDelete(id)
+      res.status(200).send('publisher deleted')
     } catch (err) {
       res.status(500).send({ message: `${err} - delete failed` })
     }
   }
 }
 
-export default AuthorsController
+export default PublishersController

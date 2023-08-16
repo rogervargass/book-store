@@ -4,11 +4,11 @@ const authorSchema = new mongoose.Schema(
   {
     id: { type: String },
     name: { type: String, required: true },
-    nationality: { type: String },
+    nationality: { type: String }
   },
   {
-    versionKey: false,
-  },
+    versionKey: false
+  }
 )
 
 const authors = mongoose.model('authors', authorSchema)

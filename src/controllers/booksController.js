@@ -1,14 +1,13 @@
-import books from '../models/Book.js'
+import Books from '../models/Book.js'
 
 class BooksController {
   static listBooks = async (req, res) => {
     try {
-      const books_list = await books
-        .find()
+      const booksList = await Books.find()
         .populate('author')
         .populate('publisher')
         .exec()
-      res.status(200).json(books_list)
+      res.status(200).json(booksList)
     } catch (err) {
       res.status(400).json({ message: `${err} - id not found` })
     }
@@ -18,8 +17,7 @@ class BooksController {
     const id = req.params.id
 
     try {
-      const book = await books
-        .findById(id)
+      const book = await Books.findById(id)
         .populate('author', 'name')
         .populate('publisher', 'name')
         .exec()
@@ -33,7 +31,7 @@ class BooksController {
     const publisher = req.query.publisher
 
     try {
-      const book = await books.find({ publisher: publisher })
+      const book = await Books.find({ publisher })
       res.status(200).json(book)
     } catch (err) {
       res.status(400).json({ message: `${err} - publisher not found` })
@@ -41,7 +39,7 @@ class BooksController {
   }
 
   static registerBook = async (req, res) => {
-    const book = new books(req.body)
+    const book = new Books(req.body)
     try {
       await book.save()
       res.status(201).send(book.toJSON())
@@ -53,7 +51,7 @@ class BooksController {
   static updateBook = async (req, res) => {
     const id = req.params.id
     try {
-      await books.findByIdAndUpdate(id, { $set: req.body })
+      await Books.findByIdAndUpdate(id, { $set: req.body })
       res.status(200).send('successfully updated book')
     } catch (err) {
       res.status(500).send({ message: `${err} - update failed` })
@@ -63,7 +61,7 @@ class BooksController {
   static deleteBook = async (req, res) => {
     const id = req.params.id
     try {
-      await books.findByIdAndDelete(id)
+      await Books.findByIdAndDelete(id)
       res.status(200).send('book deleted')
     } catch (err) {
       res.status(500).send({ message: `${err} - delete failed` })
