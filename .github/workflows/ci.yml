@@ -14,4 +14,4 @@ jobs:
       - name: Instalando as dependências
         run: npm install
       - name: Verificando ESLint
-      - run: npm run lint
+        run: npm run lint
